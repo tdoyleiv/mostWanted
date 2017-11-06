@@ -1,3 +1,4 @@
+"use strict"
 /*
 Build all of your functions for displaying and gathering information below (GUI).
 */
@@ -47,7 +48,7 @@ function searchByWeight(people) {
   let userInputWeight = prompt("How much does the person weigh?");
 
   let newArray = people.filter(function (el) {
-    if(el.weight == userInputWeight) {
+    if(el.weight === userInputWeight) {
       return true;
     }
     // return true if el.height matches userInputHeight
@@ -122,7 +123,7 @@ function promptFor(question, valid){
 
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
-  return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
+  return input.toLowerCase() === "yes" || input.toLowerCase() === "no";
 }
 
 // helper function to pass in as default promptFor validation
