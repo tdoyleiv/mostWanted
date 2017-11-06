@@ -61,9 +61,7 @@ function searchByHeight(people){
         if(el.height === userInputHeight){
             return true;
         }
-    // return true if el.height matches userInputHeight
     });
-	console.log(newArray);
     return newArray;
 }
 function searchByWeight(people){
@@ -71,14 +69,13 @@ function searchByWeight(people){
 	let newArray = people.filter(function (el){
 		if(el.weight === userInputWeight){
 			return true;
-			//displayPerson(people);
 		}
 	})
 }
 function searchByEyeColor(people){
 	let userInputEyeColor = prompt("What color is the person's eyes?");
     let newArray = people.filter(function (el){
-        if(el.eyeColor === userInputEyeColor){
+        if(el.eyeColor === userInputEyeColor.toLowerCase()){
             return true;
         }
     // return true if el.eyeColor matches userInputEyeColor
