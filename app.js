@@ -51,8 +51,19 @@ function searchByTraits(people){
     let foundPerson = filteredPeople[0];
     mainMenu(foundPerson, people);
 }
-
+//searchBy functions need invalid UI alerts
+function searchByHeight(people){
+	let userInputHeight = prompt("How tall is the person?");
+    let newArray = people.filter(function (el){
+        if(el.height === userInputHeight){
+            return true;
+        }
+    // return true if el.height matches userInputHeight
+    });
+    return newArray;
+}
 function searchByWeight(people){
+<<<<<<< HEAD
 	let userInputWeight = parseInt(prompt("How much does the person weigh?"), 10);
 	let newArray = people.filter(function (el){
 		if(el.weight === userInputWeight){
@@ -60,9 +71,48 @@ function searchByWeight(people){
 			//displayPerson(people);
 		}
 	})
+}
+function searchByEyeColor(people){
+	let userInputEyeColor = prompt("What color is the person's eyes?");
+    let newArray = people.filter(function (el){
+        if(el.eyeColor === userInputEyeColor){
+            return true;
+        }
+    // return true if el.eyeColor matches userInputEyeColor
+    });
     return newArray;
 }
-
+function searchByGender(people){
+	let userInputGender = prompt("What is the person's gender?");
+    let newArray = people.filter(function (el){
+        if(el.gender === userInputGender){
+            return true;
+        }
+    // return true if el.height matches userInputGender
+    });
+    return newArray;
+}
+function searchByAge(people){
+	let userInputAge = prompt("How old is the person?");
+    let newArray = people.filter(function (el){
+        if(el.age === userInputAge){
+            return true;
+        }
+    // return true if el.age matches userInputAge
+    });
+    return newArray;
+}
+function searchByOccupation(people){
+	let userInputOccupation = prompt("What is the person's occupation?");
+    let newArray = people.filter(function (el){
+        if(el.occupation === userInputOccupation){
+            return true;
+        }
+    // return true if el.occupation matches userInputOccupation
+    });
+>>>>>>> a29027fe887ac8b065f8d9cf85ae178912e3f2f8
+    return newArray;
+}
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
