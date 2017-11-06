@@ -13,7 +13,7 @@ function app(people){
     searchByTraits(people);
     break;
     default:
-    alert("Wrong! Please try again, following the instructions dummy. :)");
+    alert("That input is invalid. Please enter a 'yes' or 'no'.");
     app(people); // restart app
     break;
   }
@@ -32,7 +32,7 @@ function searchByTraits(people) {
       break;
     // so on and so forth
     default:
-      alert("You entered an invalid search type! Please try again.");
+      alert("That search type is invalid. Please search by 'height', 'weight', 'eye color', 'gender', 'age', or 'occupation'.");
       searchByTraits(people);
       break;
   }  
@@ -66,7 +66,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Please enter the option you want, or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
