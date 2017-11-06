@@ -33,16 +33,20 @@ function searchByTraits(people){
 			break;
 		case "eye color":
 			filteredPeople = searchByEyeColor(people);
+			break;
 		case "gender":
             filteredPeople = searchByGender(people);
+			break;
         case "age":
             filteredPeople = searchByAge(people);
+			break;
         case "occupation":
-            filteredPeople = searchByOccupation(people);	
+            filteredPeople = searchByOccupation(people);
+            break;		
 		default:
-		  alert("That search type is invalid. Please search by 'height', 'weight', 'eye color', 'gender', 'age', or 'occupation'.");
-		  searchByTraits(people);
-		  break;
+		    alert("That search type is invalid. Please search by 'height', 'weight', 'eye color', 'gender', 'age', or 'occupation'.");
+		    searchByTraits(people);
+            break;
     }  
     let foundPerson = filteredPeople[0];
     mainMenu(foundPerson, people);
