@@ -53,7 +53,7 @@ function searchByTraits(people){
 }
 //searchBy functions need invalid UI alerts
 function searchByHeight(people){
-	let userInputHeight = prompt("How tall is the person?");
+	let userInputHeight = parseInt(prompt("How tall is the person?"), 10);
     let newArray = people.filter(function (el){
         if(el.height === userInputHeight){
             return true;
@@ -63,7 +63,6 @@ function searchByHeight(people){
     return newArray;
 }
 function searchByWeight(people){
-<<<<<<< HEAD
 	let userInputWeight = parseInt(prompt("How much does the person weigh?"), 10);
 	let newArray = people.filter(function (el){
 		if(el.weight === userInputWeight){
@@ -110,7 +109,6 @@ function searchByOccupation(people){
         }
     // return true if el.occupation matches userInputOccupation
     });
->>>>>>> a29027fe887ac8b065f8d9cf85ae178912e3f2f8
     return newArray;
 }
 // Menu function to call once you find who you are looking for
