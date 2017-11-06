@@ -1,3 +1,4 @@
+"use strict"
 /*
 Build all of your functions for displaying and gathering information below (GUI).
 */
@@ -13,7 +14,7 @@ function app(people){
     searchByTraits(people);
     break;
     default:
-    alert("Wrong! Please try again, following the instructions dummy. :)");
+    alert("That input is invalid. Please enter a 'yes' or 'no'.");
     app(people); // restart app
     break;
   }
@@ -32,7 +33,7 @@ function searchByTraits(people) {
       break;
     // so on and so forth
     default:
-      alert("You entered an invalid search type! Please try again.");
+      alert("That search type is invalid. Please search by 'height', 'weight', 'eye color', 'gender', 'age', or 'occupation'.");
       searchByTraits(people);
       break;
   }  
@@ -47,7 +48,7 @@ function searchByWeight(people) {
   let userInputWeight = prompt("How much does the person weigh?");
 
   let newArray = people.filter(function (el) {
-    if(el.weight == userInputWeight) {
+    if(el.weight === userInputWeight) {
       return true;
     }
     // return true if el.height matches userInputHeight
@@ -66,7 +67,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Please enter the option you want, or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
@@ -122,7 +123,7 @@ function promptFor(question, valid){
 
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
-  return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
+  return input.toLowerCase() === "yes" || input.toLowerCase() === "no";
 }
 
 // helper function to pass in as default promptFor validation
