@@ -17,7 +17,7 @@ function app(people){
 		alert("That input is invalid. Please enter a 'yes' or 'no'.");
 		app(people); // restart app
 		break;
-  }
+	}
 }
 
 //Must create requisite functions for userSearchChoice, i.e. searchByHeight, &c. Use searchByWeight as starter
@@ -53,13 +53,13 @@ function searchByTraits(people){
 }
 
 function searchByWeight(people){
-	let userInputWeight = prompt("How much does the person weigh?");
-    let newArray = people.filter(function (el){
-        if(el.weight === userInputWeight){
-            return true;
-        }
-    // return true if el.height matches userInputHeight
-    });
+	let userInputWeight = parseInt(prompt("How much does the person weigh?"), 10);
+	let newArray = people.filter(function (el){
+		if(el.weight === userInputWeight){
+			return true;
+			//displayPerson(people);
+		}
+	})
     return newArray;
 }
 
@@ -109,11 +109,11 @@ function displayPeople(people){
     }).join("\n"));
 }
 
-function displayPerson(person){
+function displayPerson(person, index){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-    var personInfo = "First Name: " + person.firstName + "\n";
-    personInfo += "Last Name: " + person.lastName + "\n";
+    var personInfo = "First Name: " + person[index].firstName + "\n";
+    personInfo += "Last Name: " + person[index].lastName + "\n";
   // TODO: finish getting the rest of the information to display
     alert(personInfo);
 }
