@@ -48,8 +48,11 @@ function searchByTraits(people){
 		    searchByTraits(people);
             break;
     }  
-    let foundPerson = filteredPeople[0];
-    mainMenu(foundPerson, people);
+	
+	for(let i = 0; i < filteredPeople.length; i++){
+		let foundPerson = filteredPeople[i];
+		mainMenu(foundPerson, people);
+	}
 }
 //searchBy functions need invalid UI alerts
 function searchByHeight(people){
@@ -60,6 +63,7 @@ function searchByHeight(people){
         }
     // return true if el.height matches userInputHeight
     });
+	console.log(newArray);
     return newArray;
 }
 function searchByWeight(people){
