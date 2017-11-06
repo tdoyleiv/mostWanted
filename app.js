@@ -51,18 +51,67 @@ function searchByTraits(people){
     let foundPerson = filteredPeople[0];
     mainMenu(foundPerson, people);
 }
-
-function searchByWeight(people){
-	let userInputWeight = prompt("How much does the person weigh?");
+//searchBy functions need invalid UI alerts
+function searchByHeight(people){
+	let userInputHeight = prompt("How tall is the person?");
     let newArray = people.filter(function (el){
-        if(el.weight === userInputWeight){
+        if(el.height === userInputHeight){
             return true;
         }
     // return true if el.height matches userInputHeight
     });
     return newArray;
 }
-
+function searchByWeight(people){
+	let userInputWeight = prompt("How much does the person weigh?");
+    let newArray = people.filter(function (el){
+        if(el.weight === userInputWeight){
+            return true;
+        }
+    // return true if el.weight matches userInputWeight
+    });
+    return newArray;
+}
+function searchByEyeColor(people){
+	let userInputEyeColor = prompt("What color is the person's eyes?");
+    let newArray = people.filter(function (el){
+        if(el.eyeColor === userInputEyeColor){
+            return true;
+        }
+    // return true if el.eyeColor matches userInputEyeColor
+    });
+    return newArray;
+}
+function searchByGender(people){
+	let userInputGender = prompt("What is the person's gender?");
+    let newArray = people.filter(function (el){
+        if(el.gender === userInputGender){
+            return true;
+        }
+    // return true if el.height matches userInputGender
+    });
+    return newArray;
+}
+function searchByAge(people){
+	let userInputAge = prompt("How old is the person?");
+    let newArray = people.filter(function (el){
+        if(el.age === userInputAge){
+            return true;
+        }
+    // return true if el.age matches userInputAge
+    });
+    return newArray;
+}
+function searchByOccupation(people){
+	let userInputOccupation = prompt("What is the person's occupation?");
+    let newArray = people.filter(function (el){
+        if(el.occupation === userInputOccupation){
+            return true;
+        }
+    // return true if el.occupation matches userInputOccupation
+    });
+    return newArray;
+}
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
