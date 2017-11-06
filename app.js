@@ -33,7 +33,12 @@ function searchByTraits(people){
 			break;
 		case "eye color":
 			filteredPeople = searchByEyeColor(people);
-			
+		case "gender":
+            filteredPeople = searchByGender(people);
+        case "age":
+            filteredPeople = searchByAge(people);
+        case "occupation":
+            filteredPeople = searchByOccupation(people);	
 		default:
 		  alert("That search type is invalid. Please search by 'height', 'weight', 'eye color', 'gender', 'age', or 'occupation'.");
 		  searchByTraits(people);
@@ -45,8 +50,8 @@ function searchByTraits(people){
 
 function searchByWeight(people){
 	let userInputWeight = prompt("How much does the person weigh?");
-    let newArray = people.filter(function (el) {
-        if(el.weight === userInputWeight) {
+    let newArray = people.filter(function (el){
+        if(el.weight === userInputWeight){
             return true;
         }
     // return true if el.height matches userInputHeight
