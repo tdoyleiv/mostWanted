@@ -5,18 +5,18 @@ Build all of your functions for displaying and gathering information below (GUI)
 
 // app is the function called to start the entire application
 function app(people){
-  var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
-  switch(searchType){
-    case 'yes':
-		searchByName(people);			// TODO: search by name
+	var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+    switch(searchType){
+		case 'yes':
+			searchByName(people);			// TODO: search by name
+			break;
+		case 'no':
+		searchByTraits(people);
 		break;
-    case 'no':
-    searchByTraits(people);
-    break;
-    default:
-    alert("That input is invalid. Please enter a 'yes' or 'no'.");
-    app(people); // restart app
-    break;
+		default:
+		alert("That input is invalid. Please enter a 'yes' or 'no'.");
+		app(people); // restart app
+		break;
   }
 }
 
