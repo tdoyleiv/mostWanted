@@ -5,7 +5,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 
 // app is the function called to start the entire application
 function app(people){
-	var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+	var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo);
     let filteredPeople;
 	switch(searchType){
 		case 'yes':
@@ -95,15 +95,41 @@ function searchByGender(people){
     });
     return newArray;
 }
+//Convert DOB to age integer
 function searchByAge(people){
-	let userInputAge = parseInt(prompt("How old is the person?"));
+	let userInputAge = parseInt((prompt("How old is the person in years?")));
     let newArray = people.filter(function (el){
-        if(el.age === userInputAge){
+		let personAge = findAge(el);
+        if(personAge === userInputAge){
             return true;
         }
     });
     return newArray;
 }
+
+function findAge(people){
+	let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	let dobArray = people.dob.split("/");
+	let dobArrayInt = dobArray.map(function (el){
+		return parseInt(el);	
+	})
+	let monthIndex = dobArrayInt[0];
+	dobArrayInt[0] = months[monthIndex - 1];
+	dobArrayInt = dobArrayInt.join(" ");
+	let todaysDate = getTodaysDate();
+	let dobMsec = Date.parse(dobArrayInt);
+	let ageMsec = todaysDate - dobMsec;
+	let ageYears = Math.floor((ageMsec / 86400000) / 365.25);
+	console.log(ageYears);
+	return ageYears;
+}
+
+function getTodaysDate(){
+	let mSec = (new Date()).getTime();
+	console.log(mSec);
+	return mSec;
+}
+
 function searchByOccupation(people){
 	let userInputOccupation = prompt("What is the person's occupation?").toLowerCase();
     let newArray = people.filter(function (el){
@@ -123,12 +149,14 @@ function mainMenu(person, people){
     }
 
 	var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Please enter the option you want, or 'restart' or 'quit'");
-
+	let parent1;
+	let parent2;
 	switch(displayOption){
 		case "info":
 		    displayPerson(person);
 		    break;
 		case "family":
+			displayFamily(person, people);
 		// TODO: get person's family
 		break;
 		case "descendants":
@@ -172,6 +200,33 @@ function displayPeople(people){
     }).join("\n"));
 }
 
+function displayFamily(person, people){
+	let parentsArray = searchForChildren(person, people);
+	console.log(parentsArray);
+}
+
+function searchForChildren(person, people){
+	let personID = person.id;
+	let descendants;
+	let progenyIteration = ["whose children are"];
+	let newArray = people.filter(function (el){
+		if(el.parents[0] === personID || el.parents[1] === personID){
+			return true;
+		}
+    });
+	if (newArray.length > 0){
+		for (let i = 0; i < newArray.length; i++){
+			descendants = newArray[i];
+			progenyIteration.push(searchForChildren(descendants, people));
+		}	
+	}
+	   if(progenyIteration.length > 0){
+		   newArray += progenyIteration;
+		   console.log(newArray);
+	   }
+	return newArray;
+}
+
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
@@ -186,8 +241,9 @@ function displayPerson(person){
     alert(personInfo);
 }
 
+// var firstName = capitalize(promptFor("What is the person's first name?", chars));
+
 // function that prompts and validates user input
-//do/while may be syntactically wrong
 function promptFor(question, valid){
     do{
         var response = prompt(question).trim();
@@ -203,5 +259,6 @@ function yesNo(input){
 
 // helper function to pass in as default promptFor validation
 function chars(input){
-    return true; // default validation only
+    // input = /regEx/xyz
+	return true; // default validation only
 }
