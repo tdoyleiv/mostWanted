@@ -66,7 +66,6 @@ function searchByHeight(people){
             return true;
         }
     });
-	console.log(newArray);
     return newArray;
 }
 function searchByWeight(people){
@@ -81,7 +80,7 @@ function searchByWeight(people){
 function searchByEyeColor(people){
 	let userInputEyeColor = prompt("What color is the person's eyes?").toLowerCase();
     let newArray = people.filter(function (el){
-        if(el.eyeColor === userInputEyeColor){
+        if(el.eyeColor === userInputEyeColor.toLowerCase()){
             return true;
         }
     });
