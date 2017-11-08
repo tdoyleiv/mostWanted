@@ -3,6 +3,8 @@
 Build all of your functions for displaying and gathering information below (GUI).
 */
 
+//Must add multiple characteristic search entry 2-5
+
 // app is the function called to start the entire application
 function app(people){
 	var searchType = promptFor("Would you like to search by 'name' or 'traits'? Enter 'name', 'traits', or click cancel to stop.", eitherNameOrTraits);
@@ -143,7 +145,7 @@ function searchByGender(people){
     });
     return newArray;
 }
-//Convert DOB to age integer
+
 function searchByAge(people){
 	let userInputAge = parseInt((prompt("How old is the person in years?")));
     let newArray = people.filter(function (el){
@@ -203,12 +205,11 @@ function mainMenu(person, people){
 		    displayPerson(person);
 		    break;
 		case "family":
-			displayFamily(person, people);
+			searchForParents(person, people);
 			// TODO: get person's family
 			break;
 		case "descendants":
-			searchForParents(person, people);
-			// TODO: get person's descendants
+			displayDescendants(person, people);
 			break;
 		case "restart":
 			app(people); // restart
@@ -270,31 +271,29 @@ function displayPeople(people){
     }).join("\n"));
 }
 
-function displayFamily(person, people){
-	let parentsArray = searchForChildren(person, people);
-	console.log(parentsArray);
+function displayDescendants(person, people){
+	let descendantsArray = searchForChildren(person, people);
+	let descendantLineage = descendantsArray.toString().split(",").join("\n");
+	alert(descendantLineage);
 }
 
 function searchForChildren(person, people, descendants){
 	let personID = person.id;
 	let progenyIteration;
 	let addName;
-	let totalChildren = [person, " has children named: "];
+	let totalChildren = [separateName(person), "has children named:"];
 	if (descendants){
-		totalChildren = [" whose children are "];
+		totalChildren = ["whose children are:"];
 	}
 	let newArray = people.filter(function (el){
 		if(el.parents[0] === personID || el.parents[1] === personID){
 			let descendants = true;
-			
 			addName = separateName(el);
 			totalChildren.push(addName);
-			
 			progenyIteration = searchForChildren(el, people, descendants);
-			if (!(progenyIteration === "undefined")){
+			if (!(progenyIteration === undefined)){
 				totalChildren.push(progenyIteration);
 			}
-			
 			return true;
 		}
     });
