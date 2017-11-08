@@ -123,7 +123,7 @@ function findAge(people){
 	let todaysDate = getTodaysDate();
 	let dobMsec = Date.parse(dobArrayInt);
 	let ageMsec = todaysDate - dobMsec;
-	let ageYears = Math.floor((ageMsec / 86400000) / 365.25);
+	let ageYears = Math.floor((ageMsec / (86400000*365.25)));
 	console.log(ageYears);
 	return ageYears;
 }
