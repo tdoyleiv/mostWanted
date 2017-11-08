@@ -157,16 +157,17 @@ function mainMenu(person, people){
 		    break;
 		case "family":
 			displayFamily(person, people);
-		// TODO: get person's family
-		break;
+			// TODO: get person's family
+			break;
 		case "descendants":
-		// TODO: get person's descendants
-		break;
+			searchForParents(person, people);
+			// TODO: get person's descendants
+			break;
 		case "restart":
-		app(people); // restart
-		break;
+			app(people); // restart
+			break;
 		case "quit":
-		return; // stop execution
+			return; // stop execution
 		default:
 		return mainMenu(person, people); // ask again
     }
@@ -225,6 +226,26 @@ function searchForChildren(person, people){
 		   console.log(newArray);
 	   }
 	return newArray;
+}
+
+function searchForParents (person, people, descendants){
+	let matchNotFound = true;
+	let theParents = [person.firstName + " " + person.lastName + "'s parent(s): "];
+	let newArray = people.filter(function (el){
+		if(el.id === person.parents[0] || el.id === person.parents[1]){
+			if (!(matchNotFound)){
+				theParents.push("and");
+			}
+			theParents.push(el.firstName + " " + el.lastName);
+			matchNotFound = false;
+			return true;
+		}
+    });
+	if (matchNotFound){
+		return theParents = person.firstName + " " + person.lastName + " has no living parents.";
+	}else{
+		return theParents.join(" ");
+	}
 }
 
 function displayPerson(person){
