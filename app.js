@@ -205,26 +205,44 @@ function displayFamily(person, people){
 	console.log(parentsArray);
 }
 
-function searchForChildren(person, people){
+function searchForChildren(person, people, descendants){
 	let personID = person.id;
-	let descendants;
-	let progenyIteration = ["whose children are"];
+	let progenyIteration;
+	let addName;
+	let totalChildren = [person, " has children named: "];
+	if (descendants){
+		totalChildren = [" whose children are "];
+	}
 	let newArray = people.filter(function (el){
 		if(el.parents[0] === personID || el.parents[1] === personID){
+			let descendants = true;
+			
+			addName = separateName(el);
+			totalChildren.push(addName);
+			
+			progenyIteration = searchForChildren(el, people, descendants);
+			if (!(progenyIteration === "undefined")){
+				totalChildren.push(progenyIteration);
+			}
+			
 			return true;
 		}
     });
 	if (newArray.length > 0){
-		for (let i = 0; i < newArray.length; i++){
-			descendants = newArray[i];
-			progenyIteration.push(searchForChildren(descendants, people));
-		}	
+		return totalChildren;
+	}else if (descendants){
+		return;
+	}else{
+		return alert(person.firstName + " has no children.");
 	}
-	   if(progenyIteration.length > 0){
-		   newArray += progenyIteration;
-		   console.log(newArray);
-	   }
-	return newArray;
+}
+
+function separateName(person){
+	// let firstName = person.firstName;
+	// let lastName = person.lastName;
+	// let fullName += firstName + " " + lastName + ", ";
+	// return fullName;
+	return person.firstName + " " + person.lastName;
 }
 
 function displayPerson(person){
