@@ -52,7 +52,7 @@ function pickOneOrMoreTraits(people){
 		case undefined:
 			return;
 		default:
-		    alert("That input is invalid. Please enter a 'yes', 'no', or 'cancel'.");
+		    alert("That input is invalid. Please enter 'yes', 'no', or 'cancel'.");
 		    app(people); // restart app
 		    break;
 			return;
@@ -73,6 +73,7 @@ function searchByTraits(people){
     switch(userSearchChoice){
 		case "height":
 			filteredPeople = searchByHeight(people);
+			//alert("
 			break;
 		case "weight":
 			filteredPeople = searchByWeight(people);
@@ -92,7 +93,7 @@ function searchByTraits(people){
 		case "quit":
 			return;
 		default:
-		    alert("That search type is invalid. Please search by 'height', 'weight', 'eye color', 'gender', 'age', 'occupation' or 'quit'.");
+		    alert("That input is invalid. Please enter 'height', 'weight', 'eye color', 'gender', 'age', 'occupation' or 'quit'.");
 		    searchByTraits(people);
             break;
 			return;
@@ -193,8 +194,7 @@ function mainMenu(person, people){
     }
 
 	var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Please enter the option you want, or 'restart' or 'quit'");
-	let parent1;
-	let parent2;
+
 	switch(displayOption){
 		case "info":
 		    displayPerson(person);
@@ -211,9 +211,18 @@ function mainMenu(person, people){
 			break;
 		case "quit":
             return; // stop execution
+		case undefined || null:
+			return;
 		default:
+		alert("That input is invalid. Please enter 'info', 'family', 'descendants', or 'quit' to exit the program.  You can also click cancel to quit.");
 		return mainMenu(person, people); // ask again
     }
+	displayOption = promptFor("Thanks for using our secret service!  Would you like to search again? (Type 'yes', 'no', or click cancel)", yesNo);
+	if (displayOption === "yes"){
+		app(people);
+	}else{
+		return;
+	}
 }
 
 function displayFamily(person, people){
