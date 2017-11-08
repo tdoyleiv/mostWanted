@@ -50,9 +50,11 @@ function app(people){
 function pickOneOrMoreTraits(people){
 	var searchType = promptFor("Would you like to search more than one trait?  Enter 'yes', 'no', or click cancel to stop.", yesNo);
     let filteredPeople;
-	switch(searchType){
+	let traits;
+    switch(searchType){
 		case 'yes':
-			filteredPeople = searchMultipleTraits(people);
+			traits = getTraits();
+            filteredPeople = searchMultipleTraits(people, traits);
 			break;
 		case 'no':
 		    filteredPeople = searchByTraits(people);
@@ -106,9 +108,38 @@ function searchByTraits(people){
     }  
 	return filteredPeople;
 }
+function getTraits (){
+    let traits = prompt("Which traits would you like to search?  Search by: 'weight', 'height', 'eye color', 'age', or 'occupation'.  Also please separate each trait with a space.");
+    let traitsArray = traits.toLowerCase().split(" ");
+    console.log (traitsArray);
+    return traitsArray;
+}
 
-function searchMultipleTraits(people){
-	
+function searchMultipleTraits (people, traits){
+let results = [];
+  if(traits.includes("height")){  
+    results = searchByHeight(people);
+    people = results;
+  }
+  if(traits.includes("weight")){
+    results = searchByWeight(people);
+    people = results;
+  }
+  if(traits.includes("eye color")){
+    results = searchByEyeColor(people);
+    people = results;
+  }
+  if(traits.includes("age")){
+    results = searchByAge(people);
+    people = results;
+  }
+  if(traits.includes("occupation")){
+    results = searchByOccupation(people);
+    people = results;
+    
+    
+  }
+  return results;
 }
 
 function searchByHeight(people){
