@@ -171,7 +171,8 @@ function mainMenu(person, people){
 			app(people); // restart
 			break;
 		case "quit":
-			return; // stop execution
+			
+            return; // stop execution
 		default:
 		return mainMenu(person, people); // ask again
     }
@@ -276,14 +277,15 @@ function searchForParents (person, people, descendants){
 }
 
 function checkForSpouse (person, people){
-    
+    let spouse;
         let newArray = people.filter(function (el){
             if (el.currentSpouse === person.id){
+                spouse = el.firstName + " " + el.lastName
                 return true;
             }
                 
         });
-        return newArray
+        return spouse;
 }   
 
 function displayPerson(person){
