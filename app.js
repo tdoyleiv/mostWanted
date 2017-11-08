@@ -6,19 +6,23 @@ Build all of your functions for displaying and gathering information below (GUI)
 // app is the function called to start the entire application
 function app(people){
 	var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+    let filteredPeople;
     switch(searchType){
-		case 'yes':
-			searchByName(people);			// TODO: search by name
+		case 'yes':			
+            filteredPeople = searchByName(people);            
 			break;
 		case 'no':
-		searchByTraits(people);
+            searchByTraits(people);
 		break;
 		default:
 		alert("That input is invalid. Please enter a 'yes' or 'no'.");
 		app(people); // restart app
 		break;
-  }
+        }
+    let foundPerson = filteredPeople[0];
+    mainMenu(foundPerson, people);
 }
+
 
 //Must create requisite functions for userSearchChoice, i.e. searchByHeight, &c. Use searchByWeight as starter
 function searchByTraits(people){
@@ -50,6 +54,7 @@ function searchByTraits(people){
     }  
     let foundPerson = filteredPeople[0];
     mainMenu(foundPerson, people);
+    
 }
 //searchBy functions need invalid UI alerts
 function searchByHeight(people){
@@ -146,6 +151,15 @@ function mainMenu(person, people){
 function searchByName(people){
 	var firstName = promptFor("What is the person's first name?", chars);
     var lastName = promptFor("What is the person's last name?", chars);
+    let newArray = people.filter(function (el){
+        if(el.firstName === firstName && el.lastName === lastName){
+            return true;
+   
+        }
+    });
+    return newArray;
+    
+    
 
   // TODO: find the person using the name they entered
 
@@ -163,7 +177,7 @@ function displayPerson(person){
   // height, weight, age, name, occupation, eye color.
     var personInfo = "First Name: " + person.firstName + "\n";
     personInfo += "Last Name: " + person.lastName + "\n";
-  // TODO: finish getting the rest of the information to display
+    personInfo += "Height: " + person.Height + "\n"
     alert(personInfo);
 }
 
