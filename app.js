@@ -5,36 +5,61 @@ Build all of your functions for displaying and gathering information below (GUI)
 
 // app is the function called to start the entire application
 function app(people){
-	var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo);
+	var searchType = promptFor("Would you like to search by 'name' or 'traits'? Enter 'name', 'traits', or click cancel to stop.", eitherNameOrTraits);
     let filteredPeople;
 	switch(searchType){
-		case 'yes':
+		case 'name':
 			filteredPeople = searchByName(people);
 			break;
-		case 'no':
-		    searchByTraits(people);
+		case 'traits':
+		    filteredPeople = pickOneOrMoreTraits(people);
 		    break;
+		case undefined:
+			return;
 		default:
-		    alert("That input is invalid. Please enter a 'yes' or 'no'.");
+		    alert("That input is invalid. Please enter 'name', 'traits', or click cancel.");
 		    app(people); // restart app
 		    break;
+			return;
 	}
 	if (filteredPeople === undefined){
-		filteredPeople
-	}
-	for(let i = 0; i < filteredPeople.length; i++){
-		let foundPerson = filteredPeople[i];
-		mainMenu(foundPerson, people);
-	}
-	if (!(filteredPeople.length > 0)){ 
-		alert("Noone was found matching the name you entered.");
-		searchByName(people);
+		alert("Thanks for trying out our secret service!");
+		return;
+	}else if (!(filteredPeople.length > 0)){
+		alert("Noone was found matching the information you entered.");
+		app(people);
+	}else{
+		for(let i = 0; i < filteredPeople.length; i++){
+			let foundPerson = filteredPeople[i];
+			mainMenu(foundPerson, people);
+		}
 	}
 	return;
 }
 
+function pickOneOrMoreTraits(people){
+	var searchType = promptFor("Would you like to search more than one trait?  Enter 'yes', 'no', or click cancel to stop.", yesNo);
+    let filteredPeople;
+	switch(searchType){
+		case 'yes':
+			filteredPeople = searchMultipleTraits(people);
+			break;
+		case 'no':
+		    filteredPeople = searchByTraits(people);
+		    break;
+		case undefined:
+			return;
+		default:
+		    alert("That input is invalid. Please enter a 'yes', 'no', or 'cancel'.");
+		    app(people); // restart app
+		    break;
+			return;
+	}
+	return filteredPeople;
+}
+
 function searchByTraits(people){
-	let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation' or 'quit'.");
+	let userSearchChoice = prompt("What single trait would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation' or 'quit'.");
 	console.log(userSearchChoice);
 	if (userSearchChoice === null || userSearchChoice === "") {
 		return;
@@ -68,16 +93,14 @@ function searchByTraits(people){
 		    alert("That search type is invalid. Please search by 'height', 'weight', 'eye color', 'gender', 'age', 'occupation' or 'quit'.");
 		    searchByTraits(people);
             break;
+			return;
     }  
 	
-	for(let i = 0; i < filteredPeople.length; i++){
-		let foundPerson = filteredPeople[i];
-		mainMenu(foundPerson, people);
-	}
-	if (!(filteredPeople.length > 0)){ 
-		alert("Noone was found matching the traits you entered.");
-		searchByTraits(people);
-	}
+	return filteredPeople;
+}
+
+function searchMultipleTraits(people){
+	
 }
 
 function searchByHeight(people){
@@ -205,8 +228,20 @@ function capitalize(name){
 }
 
 function searchByName(people){
-	var firstName = capitalize(promptFor("What is the person's first name?", chars));
-    var lastName = capitalize(promptFor("What is the person's last name?", chars));
+	var firstName = promptFor("What is the person's first name?", chars);
+	if (firstName === null || firstName === undefined) {
+		return;
+	}else { 
+		firstName = capitalize(firstName.toLowerCase().trim());	
+	}
+	
+    var lastName = promptFor("What is the person's last name?", chars);
+	if (lastName === null || lastName === undefined) {
+		return;
+	}else { 
+		lastName = capitalize(lastName.toLowerCase().trim());	
+	}
+	
     let newArray = people.filter(function (el){
         if(el.firstName === firstName && el.lastName === lastName){
             return true;
@@ -307,11 +342,14 @@ function displayPerson(person){
 function promptFor(question, valid){
     do{//split, trim, join
         var response = prompt(question);//.trim();
-			if (response === null || response === "") {
-				return;
-			}else { 
-				response.trim();	
-			}
+		if (response === null || response === "") {
+			return;
+		}else { 
+			response = response.trim();	
+		}
+		if (!response || !valid(response)){
+			alert("You're input didn't match the text required, please try again.");
+		}
     }
 	while(!response || !valid(response));
     return response;
@@ -320,6 +358,12 @@ function promptFor(question, valid){
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
     return input.toLowerCase() === "yes" || input.toLowerCase() === "no";
+}
+
+function eitherNameOrTraits(input){
+
+	return input.toLowerCase() === "name" || input.toLowerCase() === "traits";
+
 }
 
 // helper function to pass in as default promptFor validation
