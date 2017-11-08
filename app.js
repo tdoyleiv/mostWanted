@@ -289,21 +289,31 @@ function displayDescendants(person, people){
 	alert(descendantLineage);
 }
 function searchForSiblings(person, people){
+	let matchNotFound = true;
 	let personID = person.id;
 	let totalSiblings = ["has siblings named:"];
 	let addName;
 	let newArray = people.filter(function (el){
-			if(el.parents[0] === person.parents[0] || el.parents[1] === person.parents[0] || el.parents[1] === person.parents[0] || el.parents[1] === person.parents[1]){
-				while(el.id !== personID){
-				addName = separateName(el);
-				totalSiblings.push(addName);
-				return true;
-				}
+		if (!(person.parents.length > 0)){
+			return;
+		}
+		else if(el.parents[0] === person.parents[0] || el.parents[1] === person.parents[0] || el.parents[1] === person.parents[0] || el.parents[1] === person.parents[1]){
+			while(el.id !== personID){
+			addName = separateName(el);
+			totalSiblings.push(addName);
+			matchNotFound = false;
+			return true;
 			}
+		}
 	});
-	return totalSiblings;
+	if (matchNotFound){
+		return totalSiblings = person.firstName + " " + person.lastName + " has no siblings.";
+	}else{
+		return totalSiblings;
+	}
 }
 function searchForKids(person, people){
+	let matchNotFound = true;
 	let personID = person.id;
 	let addName;
 	let totalKids = ["has children named:"]
@@ -311,10 +321,15 @@ function searchForKids(person, people){
 		if(el.parents[0] === personID || el.parents[1] === personID){
 			addName = separateName(el);
 			totalKids.push(addName);
+			matchNotFound = false;
 			return true;
 		}
 	});
-	return totalKids;
+	if(matchNotFound){
+		return totalKids = person.firstName + " " + person.lastName + " has no children.";
+	}else{
+		return totalKids;
+	}
 }
 	
 function searchForChildren(person, people, descendants){
@@ -337,9 +352,9 @@ function searchForChildren(person, people, descendants){
 			return true;
 		}
     });
-	if (newArray.length > 0){
+	if(newArray.length > 0){
 		return totalChildren;
-	}else if (descendants){
+	}else if(descendants){
 		return;
 	}else{
 		return alert(person.firstName + " has no children.");
@@ -363,7 +378,7 @@ function searchForParents (person, people, descendants){
 			return true;
 		}
     });
-	if (matchNotFound){
+	if(matchNotFound){
 		return theParents = person.firstName + " " + person.lastName + " has no living parents.";
 	}else{
 		return theParents.join("");
@@ -371,16 +386,22 @@ function searchForParents (person, people, descendants){
 }
 
 function searchForSpouse (person, people){
-    let spouse = ["has current spouse:"];
+    let matchNotFound = true;
+	let spouse = ["has current spouse:"];
 	let addName;
         let newArray = people.filter(function (el){
             if (el.currentSpouse === person.id){
                 addName = separateName(el);
 				spouse.push(addName);
+				matchNotFound = false;
                 return true;
             }
         });
-        return spouse;
+		if(matchNotFound){
+		return spouse = person.firstName + " " + person.lastName + " has no current spouse.";
+	}else{
+		return spouse;
+	}
 }   
 
 function displayPerson(person){
