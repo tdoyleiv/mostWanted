@@ -270,7 +270,7 @@ function displayFamily(person, people){
 	let children = searchForKids(person, people);
 	let familyArray = [parents, siblings, spouse, children];
 	let family = familyArray.toString().split(",").join("\n");
-	console.log(family)
+	alert(family);
 }
 	
 function capitalize(name){
@@ -320,22 +320,32 @@ function displayDescendants(person, people){
 	alert(descendantLineage);
 }
 function searchForSiblings(person, people){
+	let personID = person.id;
+	let totalSiblings = ["has siblings named:"];
+	let addName;
 	let newArray = people.filter(function (el){
-		if(el.parents[0] === person.parents[0] || el.parents[1] === person.parents[1] || el.parents[1] === person.parents[0] || el.parents[0] === person.parents[1]){
-			while(person.id !== el.id)
-			return true;
-		}
+			if(el.parents[0] === person.parents[0] || el.parents[1] === person.parents[0] || el.parents[1] === person.parents[0] || el.parents[1] === person.parents[1]){
+				while(el.id !== personID){
+				addName = separateName(el);
+				totalSiblings.push(addName);
+				return true;
+				}
+			}
 	});
-	return newArray;
+	return totalSiblings;
 }
 function searchForKids(person, people){
 	let personID = person.id;
+	let addName;
+	let totalKids = ["has children named:"]
 	let newArray = people.filter(function (el){
 		if(el.parents[0] === personID || el.parents[1] === personID){
+			addName = separateName(el);
+			totalKids.push(addName);
 			return true;
 		}
 	});
-	return newArray;
+	return totalKids;
 }
 	
 function searchForChildren(person, people, descendants){
@@ -373,11 +383,11 @@ function separateName(person){
 
 function searchForParents (person, people, descendants){
 	let matchNotFound = true;
-	let theParents = [person.firstName + " " + person.lastName + "'s parent(s): "];
+	let theParents = [person.firstName + " " + person.lastName + "\nhas parent(s) named:\n"];
 	let newArray = people.filter(function (el){
 		if(el.id === person.parents[0] || el.id === person.parents[1]){
 			if (!(matchNotFound)){
-				theParents.push("&");
+				theParents.push(" & ");
 			}
 			theParents.push(el.firstName + " " + el.lastName);
 			matchNotFound = false;
@@ -387,20 +397,19 @@ function searchForParents (person, people, descendants){
 	if (matchNotFound){
 		return theParents = person.firstName + " " + person.lastName + " has no living parents.";
 	}else{
-		return theParents.join(" ");
+		return theParents.join("");
 	}
 }
 
 function searchForSpouse (person, people){
-    let spouse;
+    let spouse = ["has current spouse:"];
+	let addName;
         let newArray = people.filter(function (el){
             if (el.currentSpouse === person.id){
-                spouse = el.firstName + " " + el.lastName
+                addName = separateName(el);
+				spouse.push(addName);
                 return true;
             }
-			else{
-				return ["No current spouse"];
-			}   
         });
         return spouse;
 }   
