@@ -5,7 +5,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 
 // app is the function called to start the entire application
 function app(people){
-<<<<<<< HEAD
+
 	var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
     let filteredPeople;
     switch(searchType){
@@ -54,17 +54,13 @@ function searchByTraits(people){
 		    searchByTraits(people);
             break;
     }  
-<<<<<<< HEAD
-    let foundPerson = filteredPeople[0];
-    mainMenu(foundPerson, people);
-    
-=======
+
 	
 	for(let i = 0; i < filteredPeople.length; i++){
 		let foundPerson = filteredPeople[i];
 		mainMenu(foundPerson, people);
 	}
->>>>>>> 0ad96683e76c8cbd8d81adf5b8f482a3c59d4ee7
+
 }
 
 function searchByHeight(people){
@@ -181,22 +177,10 @@ function mainMenu(person, people){
     }
 }
 
-<<<<<<< HEAD
-function searchByName(people){
-	var firstName = promptFor("What is the person's first name?", chars);
-    var lastName = promptFor("What is the person's last name?", chars);
-    let newArray = people.filter(function (el){
-        if(el.firstName === firstName && el.lastName === lastName){
-            return true;
-   
-        }
-    });
-    return newArray;
+
     
     
 
-  // TODO: find the person using the name they entered
-=======
 function capitalize(name){
 	let wordsArray = name.split(" ");
 	for(let i = 0; i < wordsArray.length; i++){
@@ -206,7 +190,7 @@ function capitalize(name){
 	let answer = wordsArray.join(" ");
 	return answer;
 }
->>>>>>> 0ad96683e76c8cbd8d81adf5b8f482a3c59d4ee7
+
 
 function searchByName(people){
 	var firstName = capitalize(promptFor("What is the person's first name?", chars));
@@ -273,21 +257,29 @@ function searchForParents (person, people, descendants){
 	}
 }
 
+function checkForSpouse (person, people){
+    
+        let newArray = people.filter(function (el){
+            if (el.currentSpouse === person.id){
+                return true;
+            }
+                
+        });
+        return newArray
+}   
+
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
     var personInfo = "First Name: " + person.firstName + "\n";
     personInfo += "Last Name: " + person.lastName + "\n";
-<<<<<<< HEAD
-    personInfo += "Height: " + person.Height + "\n"
-=======
+    personInfo += "Height: " + person.Height + "\n";
 	personInfo += "Gender: " + person.gender + "\n";
 	personInfo += "DOB: " + person.dob + "\n";
 	personInfo += "Height: " + person.height + "\n";
 	personInfo += "Weight: " + person.weight + "\n";
 	personInfo += "Eye Color: " + person.eyeColor + "\n";
-	personInfo += "Occupation: " + person.occupation + "\n";
->>>>>>> 0ad96683e76c8cbd8d81adf5b8f482a3c59d4ee7
+
     alert(personInfo);
 }
 
