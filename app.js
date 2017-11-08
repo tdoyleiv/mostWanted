@@ -9,6 +9,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 function app(people){
 	var searchType = promptFor("Would you like to search by 'name' or 'traits'? Enter 'name', 'traits', or click cancel to stop.", eitherNameOrTraits);
     let filteredPeople;
+	let stopRunning
 	switch(searchType){
 		case 'name':
 			filteredPeople = searchByName(people);
@@ -17,7 +18,8 @@ function app(people){
 		    filteredPeople = pickOneOrMoreTraits(people);
 		    break;
 		case undefined:
-			return;
+			filteredPeople = undefined;
+			break;
 		default:
 		    alert("That input is invalid. Please enter 'name', 'traits', or click cancel.");
 		    app(people); // restart app
@@ -28,12 +30,18 @@ function app(people){
 		alert("Thanks for trying out our secret service!");
 		return;
 	}else if (!(filteredPeople.length > 0)){
-		alert("Noone was found matching the information you entered.");
+		alert("Noone was found who matched the information you entered.");
 		app(people);
 	}else{
-		for(let i = 0; i < filteredPeople.length; i++){
+		for(let i = 0; i < filteredPeople.length && !(stopRunning === "restart"); i++){
 			let foundPerson = filteredPeople[i];
-			mainMenu(foundPerson, people);
+			stopRunning = mainMenu(foundPerson, people);
+			if (stopRunning === null){
+				return alert("Thanks for trying out our secret service!");
+			}
+		}
+		if (!(stopRunning === "restart")){
+			alert("That is everyone found who met the criteria entered.  Thanks for using our secret service!");
 		}
 	}
 	return;
@@ -62,13 +70,11 @@ function pickOneOrMoreTraits(people){
 
 function searchByTraits(people){
 	let userSearchChoice = prompt("What single trait would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation' or 'quit'.");
-	console.log(userSearchChoice);
 	if (userSearchChoice === null || userSearchChoice === "") {
 		return;
 	}else { 
 		userSearchChoice = userSearchChoice.toLowerCase().trim();	
 	}
-	console.log(userSearchChoice);
     let filteredPeople;
     switch(userSearchChoice){
 		case "height":
@@ -193,11 +199,11 @@ function mainMenu(person, people){
         return app(people); // restart
     }
 
-	var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Please enter the option you want, or 'restart' or 'quit'");
+	var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Please enter the option you want, or type 'pass' to see if there is another match or 'restart' to start over or click cancel to quit.");
 
 	switch(displayOption){
 		case "info":
-		    displayPerson(person);
+		    return displayPerson(person);
 		    break;
 		case "family":
 			displayFamily(person, people);
@@ -206,15 +212,16 @@ function mainMenu(person, people){
 		case "descendants":
 			displayDescendants(person, people);
 			break;
-		case "restart":
-			app(people); // restart
+		case "pass":
+			return displayOption;
 			break;
-		case "quit":
-            return; // stop execution
+		case "restart":
+			app(people);
+            return displayOption; // stop execution
 		case undefined || null:
-			return;
+			return null;
 		default:
-		alert("That input is invalid. Please enter 'info', 'family', 'descendants', or 'quit' to exit the program.  You can also click cancel to quit.");
+		alert("That input is invalid. Please enter 'info', 'family', 'descendants', or 'restart' to exit the program.  You can also click cancel to quit.");
 		return mainMenu(person, people); // ask again
     }
 	displayOption = promptFor("Thanks for using our secret service!  Would you like to search again? (Type 'yes', 'no', or click cancel)", yesNo);
