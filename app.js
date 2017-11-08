@@ -26,28 +26,7 @@ function app(people){
 
 
 //Must create requisite functions for userSearchChoice, i.e. searchByHeight, &c. Use searchByWeight as starter
-=======
-	var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo);
-    let filteredPeople;
-	switch(searchType){
-		case 'yes':
-			filteredPeople = searchByName(people);
-			break;
-		case 'no':
-		    searchByTraits(people);
-		    break;
-		default:
-		    alert("That input is invalid. Please enter a 'yes' or 'no'.");
-		    app(people); // restart app
-		    break;
-	}
-	for(let i = 0; i < filteredPeople.length; i++){
-		let foundPerson = filteredPeople[i];
-		mainMenu(foundPerson, people);
-	}
-}
 
->>>>>>> 0ad96683e76c8cbd8d81adf5b8f482a3c59d4ee7
 function searchByTraits(people){
 	let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.").toLowerCase();
     let filteredPeople;
