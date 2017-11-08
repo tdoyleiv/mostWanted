@@ -19,14 +19,29 @@ function app(people){
 		    app(people); // restart app
 		    break;
 	}
+	if (filteredPeople === undefined){
+		filteredPeople
+	}
 	for(let i = 0; i < filteredPeople.length; i++){
 		let foundPerson = filteredPeople[i];
 		mainMenu(foundPerson, people);
 	}
+	if (!(filteredPeople.length > 0)){ 
+		alert("Noone was found matching the name you entered.");
+		searchByName(people);
+	}
+	return;
 }
 
 function searchByTraits(people){
-	let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.").toLowerCase();
+	let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation' or 'quit'.");
+	console.log(userSearchChoice);
+	if (userSearchChoice === null || userSearchChoice === "") {
+		return;
+	}else { 
+		userSearchChoice = userSearchChoice.toLowerCase().trim();	
+	}
+	console.log(userSearchChoice);
     let filteredPeople;
     switch(userSearchChoice){
 		case "height":
@@ -46,9 +61,11 @@ function searchByTraits(people){
 			break;
         case "occupation":
             filteredPeople = searchByOccupation(people);
-            break;		
+            break;	
+		case "quit":
+			return;
 		default:
-		    alert("That search type is invalid. Please search by 'height', 'weight', 'eye color', 'gender', 'age', or 'occupation'.");
+		    alert("That search type is invalid. Please search by 'height', 'weight', 'eye color', 'gender', 'age', 'occupation' or 'quit'.");
 		    searchByTraits(people);
             break;
     }  
@@ -56,6 +73,10 @@ function searchByTraits(people){
 	for(let i = 0; i < filteredPeople.length; i++){
 		let foundPerson = filteredPeople[i];
 		mainMenu(foundPerson, people);
+	}
+	if (!(filteredPeople.length > 0)){ 
+		alert("Noone was found matching the traits you entered.");
+		searchByTraits(people);
 	}
 }
 
@@ -266,8 +287,13 @@ function displayPerson(person){
 
 // function that prompts and validates user input
 function promptFor(question, valid){
-    do{
-        var response = prompt(question).trim();
+    do{//split, trim, join
+        var response = prompt(question);//.trim();
+			if (response === null || response === "") {
+				return;
+			}else { 
+				response.trim();	
+			}
     }
 	while(!response || !valid(response));
     return response;
