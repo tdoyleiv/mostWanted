@@ -121,10 +121,10 @@ function mainMenu(person, people){
 		    return displayPerson(person);
 		    break;
 		case "family":
-			displayFamily(person, people);
+			return displayFamily(person, people);
 			break;
 		case "descendants":
-			displayDescendants(person, people);
+			return displayDescendants(person, people);
 			break;
 		case "pass":
 			return displayOption;
@@ -261,7 +261,6 @@ function searchByTraits(people){
     switch(userSearchChoice){
 		case "height":
 			filteredPeople = searchByHeight(people);
-			//alert("
 			break;
 		case "weight":
 			filteredPeople = searchByWeight(people);
@@ -407,39 +406,43 @@ function searchForParents (person, people, descendants){
 }
 function searchMultipleTraits (people, traits){
 	let results = [];
+	let peopleScanned = people.filter(function (la){
+		return true;
+	})
+	console.log(peopleScanned);
+	
 	if(traits.includes("height")){  
-    results = searchByHeight(people);
-    people = results;
+    results = searchByHeight(peopleScanned);
+    peopleScanned = results;
 	}
 	if(traits.includes("weight")){
-		results = searchByWeight(people);
-		people = results;
+		results = searchByWeight(peopleScanned);
+		peopleScanned = results;
 	}
 	if(traits.includes("eye") && traits.includes("color")){
-		results = searchByEyeColor(people);
-		people = results;
+		results = searchByEyeColor(peopleScanned);
+		peopleScanned = results;
 	}
 	if(traits.includes("age")){
-		results = searchByAge(people);
-		people = results;
+		results = searchByAge(peopleScanned);
+		peopleScanned = results;
 	}
 	if(traits.includes("occupation")){
-		results = searchByOccupation(people);
-		people = results;
+		results = searchByOccupation(peopleScanned);
+		peopleScanned = results;
 	}
-	let filteredPeopleNames = [];
-	if (results.length > 0){
-		for (let j = 0; j < results.length; j++){
-			if (j === results.length - 1 && !(j === 0)){
-				filteredPeopleNames.push("and " + separateName(results[j]));
-			}else{
-				filteredPeopleNames.push(separateName(results[j]));
-			}
-		}
-		return alert(filteredPeopleNames.join(", ") + " matched the traits you searched.");
-	}else{
+	
+	let filteredPeopleNames = results.map(function(el){
+		return el.firstName + " " + el.lastName;
+	})
+	
+	let userInput = promptFor(filteredPeopleNames.join("\n") + "\n" + "Matched the traits searched.  Would you like to see their information, decendants, or family?  Type 'yes', 'no', or click cancel to exit this search.", yesNo);
+	
+	if (userInput === "yes"){
 		return results;
 	}
+	
+	return;
 }
 function separateName(person){
 	return person.firstName + " " + person.lastName;
