@@ -72,7 +72,7 @@ function displayDescendants(person, people){
 	let descendantsArray = searchForChildren(person, people);
 	let descendantLineage = descendantsArray.toString().split(",").join("\n");
 	alert(descendantLineage);
-	let userInput = promptFor("Would you like to see their information or family?  Type 'yes', 'no', or click cancel to exit this search.", yesNo);
+	let userInput = promptFor("Would you like to see their information or family?  Type 'yes' to see more data on this match, or 'no' / click cancel to move onto the next match (if there is one)", yesNo);
 	if (userInput === "yes"){
 		return mainMenu(person, people);
 	}
@@ -86,7 +86,7 @@ function displayFamily(person, people){
 	let familyArray = [parents, siblings, spouse, children];
 	let family = familyArray.toString().split(",").join("\n");
 	alert(family);
-	let userInput = promptFor("Would you like to see their information or descendants?  Type 'yes', 'no', or click cancel to exit this search.", yesNo);
+	let userInput = promptFor("Would you like to see their information or descendants?  Type 'yes' to see more data on this match, or 'no' / click cancel to move onto the next match (if there is one)", yesNo);
 	if (userInput === "yes"){
 		return mainMenu(person, people);
 	}
@@ -106,7 +106,7 @@ function displayPerson(person, people){
 	personInfo += "Weight: " + person.weight + "\n";
 	personInfo += "Eye Color: " + person.eyeColor + "\n";
     alert(personInfo);
-    let userInput = promptFor("Would you like to see their family or descendants?  Type 'yes', 'no', or click cancel to exit this search.", yesNo);
+    let userInput = promptFor("Would you like to see their family or descendants?  Type 'yes' to see more data on this match, or 'no' / click cancel to move onto the next match (if there is one).", yesNo);
 	if (userInput === "yes"){
 		return mainMenu(person, people);
 	}
@@ -146,7 +146,7 @@ function mainMenu(person, people){
         alert("Could not find that individual.");
         return app(people);
     }
-	var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Please enter the option you want, or type 'pass' to see if there is another match or 'restart' to start over or click cancel to quit.");
+	var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Please enter the option you want, or type 'pass' to see the next match (if there is one), 'restart' to start over or click cancel to quit.");
 	switch(displayOption){
 		case "info":
 		    return displayPerson(person, people);
@@ -436,9 +436,7 @@ function searchForParents (person, people, descendants){
 	}
 }
 function searchMultipleTraits (people, traits){
-	let results = people.filter(function (la){
-		return true;
-	});
+	let results = people;
 	if(traits.includes("height")){  
         results = searchByHeight(results);
 	}
@@ -457,7 +455,7 @@ function searchMultipleTraits (people, traits){
 	let filteredPeopleNames = results.map(function(el){
 		return el.firstName + " " + el.lastName;
 	});
-	let userInput = promptFor(filteredPeopleNames.join("\n") + "\nMatched the traits searched. Would you like to see their information, descendants, or family?  Type 'yes', 'no', or click cancel to exit this search.", yesNo);
+	let userInput = promptFor(filteredPeopleNames.join("\n") + "\nMatched the traits searched. Would you like to see their information, descendants, or family?  Type 'yes' to check more data on the matches found, or type 'no' / click cancel to exit this search.", yesNo);
 	if (userInput === "yes"){
 		return results;
 	}
