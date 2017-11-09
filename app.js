@@ -238,7 +238,6 @@ function mainMenu(person, people){
 		    break;
 		case "family":
 			displayFamily(person, people);
-			// TODO: get person's family
 			break;
 		case "descendants":
 			displayDescendants(person, people);
