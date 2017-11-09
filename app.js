@@ -70,8 +70,10 @@ function checkIfNumber(input){
 }
 function displayDescendants(person, people){
 	let descendantsArray = searchForChildren(person, people);
-	let descendantLineage = descendantsArray.toString().split(",").join("\n");
-	alert(descendantLineage);
+	if (!(descendantsArray === undefined)){
+		let descendantLineage = descendantsArray.toString().split(",").join("\n");
+		alert(descendantLineage);
+	}
 	let userInput = promptFor("Would you like to see their information or family?  Type 'yes' to see more data on this match, or 'no' / click cancel to move onto the next match (if there is one)", yesNo);
 	if (userInput === "yes"){
 		return mainMenu(person, people);
@@ -328,7 +330,6 @@ function searchByWeight(people){
 	return newArray;
 }
 function searchForChildren(person, people, descendants){
-	let personID = person.id;
 	let progenyIteration;
 	let addName;
 	let totalChildren = [separateName(person), "has children named:"];
@@ -336,7 +337,7 @@ function searchForChildren(person, people, descendants){
 		totalChildren = ["whose children are:"];
 	}
 	let newArray = people.filter(function (el){
-		if(el.parents[0] === personID || el.parents[1] === personID){
+		if(el.parents[0] === person.id || el.parents[1] === person.id){
 			let descendants = true;
 			addName = separateName(el);
 			totalChildren.push(addName);
@@ -352,16 +353,15 @@ function searchForChildren(person, people, descendants){
 	}else if(descendants){
 		return;
 	}else{
-		return alert(person.firstName + " has no children.");
+		return alert(person.firstName + " " + person.lastName + " has no children.");
 	}
 }
 function searchForKids(person, people){
 	let matchNotFound = true;
-	let personID = person.id;
 	let addName;
 	let totalKids = ["has children named:"]
 	let newArray = people.filter(function (el){
-		if(el.parents[0] === personID || el.parents[1] === personID){
+		if(el.parents[0] === person.id || el.parents[1] === person.id){
 			addName = separateName(el);
 			totalKids.push(addName);
 			matchNotFound = false;
