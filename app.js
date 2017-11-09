@@ -78,8 +78,8 @@ function displayPerson(person){
 	personInfo += "Height: " + person.height + "\n";
 	personInfo += "Weight: " + person.weight + "\n";
 	personInfo += "Eye Color: " + person.eyeColor + "\n";
-
     alert(personInfo);
+
 }
 function eitherNameOrTraits(input){
 	return input.toLowerCase() === "name" || input.toLowerCase() === "traits";
@@ -405,43 +405,31 @@ function searchForParents (person, people, descendants){
 	}
 }
 function searchMultipleTraits (people, traits){
-	let results = [];
-	let peopleScanned = people.filter(function (la){
+	let results = people.filter(function (la){
 		return true;
-	})
-	console.log(peopleScanned);
-	
+	});
 	if(traits.includes("height")){  
-    results = searchByHeight(peopleScanned);
-    peopleScanned = results;
+        results = searchByHeight(results);
 	}
 	if(traits.includes("weight")){
-		results = searchByWeight(peopleScanned);
-		peopleScanned = results;
+		results = searchByWeight(results);
 	}
 	if(traits.includes("eye") && traits.includes("color")){
-		results = searchByEyeColor(peopleScanned);
-		peopleScanned = results;
+		results = searchByEyeColor(results);
 	}
 	if(traits.includes("age")){
-		results = searchByAge(peopleScanned);
-		peopleScanned = results;
+		results = searchByAge(results);
 	}
 	if(traits.includes("occupation")){
-		results = searchByOccupation(peopleScanned);
-		peopleScanned = results;
+		results = searchByOccupation(results);
 	}
-	
 	let filteredPeopleNames = results.map(function(el){
 		return el.firstName + " " + el.lastName;
-	})
-	
+	});
 	let userInput = promptFor(filteredPeopleNames.join("\n") + "\n" + "Matched the traits searched.  Would you like to see their information, decendants, or family?  Type 'yes', 'no', or click cancel to exit this search.", yesNo);
-	
 	if (userInput === "yes"){
 		return results;
 	}
-	
 	return;
 }
 function separateName(person){
