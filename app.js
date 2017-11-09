@@ -49,7 +49,7 @@ function capitalize(name){
 	return answer;
 }
 function chars(input){
-	let checkForLetters = input.match(/[A-z]/g);
+	let checkForLetters = input.match(/[A-z ]/g);
 	if (checkForLetters === null){
 		return true;
 	}
@@ -136,7 +136,7 @@ function getTodaysDate(){
 	return mSec;
 }
 function getTraits (){
-    let traits = prompt("Which traits would you like to search?  Search by: 'weight', 'height', 'eye color', 'age', or 'occupation'.  Please separate each trait with a space.");
+    let traits = promptFor("Which traits would you like to search?  Search by: 'weight', 'height', 'eye color', 'age', or 'occupation'.  Please separate each trait with a space.", chars);
     let traitsArray = traits.toLowerCase().split(" ");
     console.log (traitsArray);
     return traitsArray;
