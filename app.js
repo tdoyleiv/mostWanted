@@ -116,26 +116,26 @@ function getTraits (){
 }
 
 function searchMultipleTraits (people, traits){
-	let results = [];
+	let results = people;
 	if(traits.includes("height")){  
-    results = searchByHeight(people);
-    people = results;
+        results = searchByHeight(results);
+        
 	}
 	if(traits.includes("weight")){
-		results = searchByWeight(people);
-		people = results;
+		results = searchByWeight(results);
+		
 	}
 	if(traits.includes("eye") && traits.includes("color")){	//currently can't be found, change getTraits() to find this
-		results = searchByEyeColor(people);
-		people = results;
+		results = searchByEyeColor(results);
+		
 	}
 	if(traits.includes("age")){
-		results = searchByAge(people);
-		people = results;
+		results = searchByAge(results);
+		
 	}
 	if(traits.includes("occupation")){
-		results = searchByOccupation(people);
-		people = results;
+		results = searchByOccupation(results);
+		
 	}
 	let filteredPeopleNames = [];
 	if (results.length > 0){
