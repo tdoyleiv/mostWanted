@@ -72,6 +72,11 @@ function displayDescendants(person, people){
 	let descendantsArray = searchForChildren(person, people);
 	let descendantLineage = descendantsArray.toString().split(",").join("\n");
 	alert(descendantLineage);
+	let userInput = promptFor("Would you like to see their information or family?  Type 'yes', 'no', or click cancel to exit this search.", yesNo);
+	if (userInput === "yes"){
+		return mainMenu(person, people);
+	}
+	return;
 }
 function displayFamily(person, people){
 	let parents = searchForParents(person, people);
@@ -81,13 +86,18 @@ function displayFamily(person, people){
 	let familyArray = [parents, siblings, spouse, children];
 	let family = familyArray.toString().split(",").join("\n");
 	alert(family);
+	let userInput = promptFor("Would you like to see their information or descendants?  Type 'yes', 'no', or click cancel to exit this search.", yesNo);
+	if (userInput === "yes"){
+		return mainMenu(person, people);
+	}
+	return;
 }
 function displayPeople(people){
     alert(people.map(function(person){
         return person.firstName + " " + person.lastName;
     }).join("\n"));
 }
-function displayPerson(person){
+function displayPerson(person, people){
     var personInfo = "First Name: " + person.firstName + "\n";
     personInfo += "Last Name: " + person.lastName + "\n";
 	personInfo += "Gender: " + person.gender + "\n";
@@ -95,8 +105,12 @@ function displayPerson(person){
 	personInfo += "Height: " + person.height + "\n";
 	personInfo += "Weight: " + person.weight + "\n";
 	personInfo += "Eye Color: " + person.eyeColor + "\n";
-
     alert(personInfo);
+    let userInput = promptFor("Would you like to see their family or descendants?  Type 'yes', 'no', or click cancel to exit this search.", yesNo);
+	if (userInput === "yes"){
+		return mainMenu(person, people);
+	}
+	return;
 }
 function eitherNameOrTraits(input){
 	return input.toLowerCase() === "name" || input.toLowerCase() === "traits";
@@ -130,7 +144,7 @@ function getTraits (){
 function mainMenu(person, people){
     if(!person){
         alert("Could not find that individual.");
-        return app(people); // restart
+        return app(people);
     }
 	var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Please enter the option you want, or type 'pass' to see if there is another match or 'restart' to start over or click cancel to quit.");
 	switch(displayOption){
@@ -178,7 +192,7 @@ function pickOneOrMoreTraits(people){
 			return;
 		default:
 		    alert("That input is invalid. Please enter 'yes', 'no', or 'cancel'.");
-		    app(people); // restart app
+		    app(people);
 		    break;
 			return;
 	}
@@ -269,9 +283,9 @@ function searchByOccupation(people){
 }
 function searchByTraits(people){
 	let userSearchChoice = prompt("What single trait would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation' or 'quit'.");
-	if (userSearchChoice === null || userSearchChoice === "") {
+	if (userSearchChoice === null || userSearchChoice === ""){
 		return;
-	}else { 
+	}else{ 
 		userSearchChoice = userSearchChoice.toLowerCase().trim();	
 	}
     let filteredPeople;
@@ -422,43 +436,31 @@ function searchForParents (person, people, descendants){
 	}
 }
 function searchMultipleTraits (people, traits){
-	let results = [];
-	let peopleScanned = people.filter(function (la){
+	let results = people.filter(function (la){
 		return true;
-	})
-	console.log(peopleScanned);
-	
+	});
 	if(traits.includes("height")){  
-    results = searchByHeight(peopleScanned);
-    peopleScanned = results;
+        results = searchByHeight(results);
 	}
 	if(traits.includes("weight")){
-		results = searchByWeight(peopleScanned);
-		peopleScanned = results;
+		results = searchByWeight(results);
 	}
 	if(traits.includes("eye") && traits.includes("color")){
-		results = searchByEyeColor(peopleScanned);
-		peopleScanned = results;
+		results = searchByEyeColor(results);
 	}
 	if(traits.includes("age")){
-		results = searchByAge(peopleScanned);
-		peopleScanned = results;
+		results = searchByAge(results);
 	}
 	if(traits.includes("occupation")){
-		results = searchByOccupation(peopleScanned);
-		peopleScanned = results;
+		results = searchByOccupation(results);
 	}
-	
 	let filteredPeopleNames = results.map(function(el){
 		return el.firstName + " " + el.lastName;
-	})
-	
-	let userInput = promptFor(filteredPeopleNames.join("\n") + "\n" + "Matched the traits searched.  Would you like to see their information, decendants, or family?  Type 'yes', 'no', or click cancel to exit this search.", yesNo);
-	
+	});
+	let userInput = promptFor(filteredPeopleNames.join("\n") + "\nMatched the traits searched. Would you like to see their information, descendants, or family?  Type 'yes', 'no', or click cancel to exit this search.", yesNo);
 	if (userInput === "yes"){
 		return results;
 	}
-	
 	return;
 }
 function separateName(person){
