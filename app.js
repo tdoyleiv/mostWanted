@@ -49,7 +49,24 @@ function capitalize(name){
 	return answer;
 }
 function chars(input){
-	return true;
+	let checkForLetters = input.match(/[A-z]/g);
+	if (checkForLetters === null){
+		return true;
+	}
+	if (input === checkForLetters.join("")){
+		return true;
+	}
+	return false;
+}
+function checkIfNumber(input){
+	let checkForNumbers = input.match(/[0-9]/g);
+	if (checkForNumbers === null){
+		return true;
+	}
+	if (input === checkForNumbers.join("")){
+		return true;
+	}
+	return false;
 }
 function displayDescendants(person, people){
 	let descendantsArray = searchForChildren(person, people);
@@ -118,7 +135,7 @@ function mainMenu(person, people){
 	var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Please enter the option you want, or type 'pass' to see if there is another match or 'restart' to start over or click cancel to quit.");
 	switch(displayOption){
 		case "info":
-		    return displayPerson(person);
+		    return displayPerson(person, people);
 		    break;
 		case "family":
 			return displayFamily(person, people);
@@ -176,14 +193,14 @@ function promptFor(question, valid){
 			response = response.trim();	
 		}
 		if (!response || !valid(response)){
-			alert("You're input didn't match the text required, please try again.");
+			alert("You're input didn't match the text/number required.  Please try again.");
 		}
     }
 	while(!response || !valid(response));
     return response;
 }
 function searchByAge(people){
-	let userInputAge = parseInt((prompt("How old is the person in years?")));
+	let userInputAge = parseInt(promptFor("How old is the person in years?", checkIfNumber), 10);
     let newArray = people.filter(function (el){
 		let personAge = findAge(el);
         if(personAge === userInputAge){
@@ -193,7 +210,7 @@ function searchByAge(people){
     return newArray;
 }
 function searchByEyeColor(people){
-	let userInputEyeColor = prompt("What color is the person's eyes?").toLowerCase();
+	let userInputEyeColor = promptFor("What color is the person's eyes?", chars).toLowerCase();
     let newArray = people.filter(function (el){
         if(el.eyeColor === userInputEyeColor.toLowerCase()){
             return true;
@@ -202,7 +219,7 @@ function searchByEyeColor(people){
     return newArray;
 }
 function searchByGender(people){
-	let userInputGender = prompt("What is the person's gender?").toLowerCase();
+	let userInputGender = promptFor("What is the person's gender?",chars).toLowerCase();
     let newArray = people.filter(function (el){
         if(el.gender === userInputGender){
             return true;
@@ -211,7 +228,7 @@ function searchByGender(people){
     return newArray;
 }
 function searchByHeight(people){
-	let userInputHeight = parseInt(prompt("How tall is the person in inches?"), 10);
+	let userInputHeight = parseInt(promptFor("How tall is the person in inches?", checkIfNumber), 10);
     let newArray = people.filter(function (el){
         if(el.height === userInputHeight){
             return true;
@@ -242,7 +259,7 @@ function searchByName(people){
     return newArray;
 }
 function searchByOccupation(people){
-	let userInputOccupation = prompt("What is the person's occupation?").toLowerCase();
+	let userInputOccupation = promptFor("What is the person's occupation?", chars).toLowerCase();
     let newArray = people.filter(function (el){
         if(el.occupation === userInputOccupation){
             return true;
@@ -288,7 +305,7 @@ function searchByTraits(people){
 	return filteredPeople;
 }
 function searchByWeight(people){
-	let userInputWeight = parseInt(prompt("How much does the person weigh?"), 10);
+	let userInputWeight = parseInt(promptFor("How much does the person weigh?",checkIfNumber), 10);
 	let newArray = people.filter(function (el){
 		if(el.weight === userInputWeight){
 			return true;
