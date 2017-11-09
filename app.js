@@ -109,7 +109,7 @@ function searchByTraits(people){
 	return filteredPeople;
 }
 function getTraits (){
-    let traits = prompt("Which traits would you like to search?  Search by: 'weight', 'height', 'eye color', 'age', or 'occupation'.  Also please separate each trait with a space.");
+    let traits = prompt("Which traits would you like to search?  Search by: 'weight', 'height', 'eye color', 'age', or 'occupation'.  Please separate each trait with a space.");
     let traitsArray = traits.toLowerCase().split(" ");
     console.log (traitsArray);
     return traitsArray;
@@ -125,7 +125,7 @@ function searchMultipleTraits (people, traits){
 		results = searchByWeight(people);
 		people = results;
 	}
-	if(traits.includes("eye color")){	//currently can't be found, change getTraits() to find this
+	if(traits.includes("eye") && traits.includes("color")){	//currently can't be found, change getTraits() to find this
 		results = searchByEyeColor(people);
 		people = results;
 	}
