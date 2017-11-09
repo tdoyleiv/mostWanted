@@ -15,7 +15,7 @@ function app(people){
 			break;
 		default:
 		    alert("That input is invalid. Please enter 'name', 'traits', or click cancel.");
-		    app(people); // restart app
+		    app(people);
 		    break;
 			return;
 	}
@@ -131,12 +131,12 @@ function mainMenu(person, people){
 			break;
 		case "restart":
 			app(people);
-            return displayOption; // stop execution
+            return displayOption;
 		case undefined || null:
 			return null;
 		default:
 		alert("That input is invalid. Please enter 'info', 'family', 'descendants', or 'restart' to exit the program.  You can also click cancel to quit.");
-		return mainMenu(person, people); // ask again
+		return mainMenu(person, people);
     }
 	displayOption = promptFor("Thanks for using our secret service!  Would you like to search again? (Type 'yes', 'no', or click cancel)", yesNo);
 	if (displayOption === "yes"){
@@ -415,7 +415,7 @@ function searchMultipleTraits (people, traits){
 		results = searchByWeight(people);
 		people = results;
 	}
-	if(traits.includes("eye") && traits.includes("color")){	//currently can't be found, change getTraits() to find this
+	if(traits.includes("eye") && traits.includes("color")){
 		results = searchByEyeColor(people);
 		people = results;
 	}
